@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import codeBlockRoutes from "./routes/codeBlockRoutes";
+
 
 dotenv.config();
 const BASE_URL = process.env.BASE_URL ;
@@ -28,5 +30,6 @@ app.use(cors(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/code-blocks", codeBlockRoutes);
 
 export default app;
