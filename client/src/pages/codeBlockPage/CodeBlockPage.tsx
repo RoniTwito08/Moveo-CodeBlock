@@ -1,4 +1,4 @@
-import { useEffect, useState  } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchCodeBlockById } from "../../services/api";
 import socket from "../../services/socket";
@@ -15,10 +15,10 @@ interface CodeBlock {
 const CodeBlockPage = () => {
   const { id: blockId } = useParams<{ id: string }>();
   const [block, setBlock] = useState<CodeBlock | null>(null);
+  const [code, setCode] = useState(""); 
   const [role, setRole] = useState<"mentor" | "student">("student");
+  const [showSmiley, setShowSmiley] = useState(false);
   const navigate = useNavigate();
-
-
 
   useEffect(() => {
     if (!blockId) return;
@@ -27,6 +27,7 @@ const CodeBlockPage = () => {
       try {
         const data = await fetchCodeBlockById(blockId);
         setBlock(data);
+        setCode(data.initialCode); 
       } catch (err) {
         console.error("❌ Failed to fetch code block:", err);
       }
@@ -35,35 +36,44 @@ const CodeBlockPage = () => {
     fetchBlock();
   }, [blockId]);
 
-  
   useEffect(() => {
+    if (!blockId) return;
+  
+    socket.emit("join-room", blockId);
+  
+    socket.on("role", (receivedRole: "mentor" | "student") => {
+      setRole(receivedRole);
+    });
+  
+    socket.on("code-change", (newCode: string) => {
+      setCode(newCode);
+    });
+  
+    socket.on("show-smiley", () => {
+      setShowSmiley(true);
+    });
+  
     socket.on("room-closed", () => {
       alert("🚪 The mentor left the room. You'll be redirected to the lobby.");
       navigate("/");
     });
   
     return () => {
+      socket.emit("leave-room", blockId);
+      socket.off("role");
+      socket.off("code-change");
+      socket.off("show-smiley");
       socket.off("room-closed");
-    };
-  }, []);
-  useEffect(() => {
-    if (!blockId) return;
-  
-    socket.emit("join-room", blockId); 
-  
-    const handleRole = (receivedRole: "mentor" | "student") => {
-      setRole(receivedRole);
-      console.log(`👤 Assigned role: ${receivedRole}`);
-    };
-  
-    socket.on("role", handleRole);
-  
-    return () => {
-      socket.emit("leave-room", blockId); 
-      socket.off("role", handleRole);
     };
   }, [blockId]);
   
+ 
+  const handleCodeChange = (value: string | undefined) => {
+    if (value !== undefined) {
+      setCode(value);
+      socket.emit("code-change", { roomId: blockId, code: value });
+    }
+  };
 
   if (!block) return <div>Loading...</div>;
 
@@ -73,12 +83,18 @@ const CodeBlockPage = () => {
       <h3 className={styles.role}>
         Role: {role === "mentor" ? "👨‍🏫 Mentor" : "🧑‍🎓 Student"}
       </h3>
+     { showSmiley && (
+       <div className={styles.smiley}>
+       🎉 Correct! Great job!
+     </div>
+)    }
 
       <Editor
         height="600px"
         width="1000px"
         defaultLanguage="javascript"
-        defaultValue={block.initialCode}
+        value={code}
+        onChange={handleCodeChange}
         theme="vs-dark"
         options={{
           fontSize: 14,
