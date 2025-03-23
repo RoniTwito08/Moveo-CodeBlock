@@ -22,3 +22,19 @@
     max-width: 800px;
     margin: 0 auto;
   }
+  .smiley {
+    font-size: 5rem;
+    margin-top: 2rem;
+    animation: pop 0.4s ease;
+  }
+  
+  @keyframes pop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
