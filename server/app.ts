@@ -21,6 +21,12 @@ type RoomData = {
 };
 
 export const rooms: Record<string, RoomData> = {};
+const emitStudentCount = (roomId: string) => {
+  const room = rooms[roomId];
+  if (!room) return;
+  const studentCount = room.participants.size - (room.mentorId ? 1 : 0);
+  io.to(roomId).emit("update-student-count", studentCount);
+};
 
 type CodeBlockType = { _id: string; solution: string };
 const codeBlocks: CodeBlockType[] = [];
@@ -50,6 +56,7 @@ io.on("connection", (socket) => {
       console.log(`🎓 Mentor assigned to room ${roomId}`);
     } else {
       socket.emit("role", "student");
+      emitStudentCount(roomId);
       console.log(`🧑‍🎓 Student joined room ${roomId}`);
     }
   });
@@ -72,6 +79,8 @@ io.on("connection", (socket) => {
         io.to(roomId).emit("room-closed");
         delete rooms[roomId];
         console.log(`❌ Mentor left room ${roomId} – room closed`);
+      }else {
+        emitStudentCount(roomId);
       }
     }
   });
