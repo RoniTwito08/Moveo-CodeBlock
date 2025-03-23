@@ -37,11 +37,11 @@ Database: MongoDB (Mongoose)
 1. Clone the repository
 git clone https://github.com/RoniTwito08/Moveo-CodeBlock.git
 cd Moveo-CodeBlock
-2. Setup server
-cd server
-npm install
-npm run dev
-3. Setup client
-cd client
-npm install
-npm run dev
+2. Setup server :
+cd server ->
+npm install ->
+npm run dev .
+3. Setup client :
+cd client ->
+npm install ->
+npm run dev .
