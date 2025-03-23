@@ -18,6 +18,7 @@ const CodeBlockPage = () => {
   const [code, setCode] = useState(""); 
   const [role, setRole] = useState<"mentor" | "student">("student");
   const [showSmiley, setShowSmiley] = useState(false);
+  const [studentCount, setStudentCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +53,10 @@ const CodeBlockPage = () => {
     socket.on("show-smiley", () => {
       setShowSmiley(true);
     });
-  
+    socket.on("update-student-count", (count: number) => {
+      setStudentCount(count);
+    });
+
     socket.on("room-closed", () => {
       alert("🚪 The mentor left the room. You'll be redirected to the lobby.");
       navigate("/");
@@ -64,6 +68,7 @@ const CodeBlockPage = () => {
       socket.off("code-change");
       socket.off("show-smiley");
       socket.off("room-closed");
+      socket.off("update-student-count");
     };
   }, [blockId]);
   
@@ -83,9 +88,12 @@ const CodeBlockPage = () => {
       <h3 className={styles.role}>
         Role: {role === "mentor" ? "👨‍🏫 Mentor" : "🧑‍🎓 Student"}
       </h3>
+      <div className={styles.studentCounter}>
+        🧑‍🎓 Students Connected: {studentCount}
+      </div>
      { showSmiley && (
        <div className={styles.smiley}>
-       🎉 Correct! Great job!
+       🎉 Correct! Great job! 😊
      </div>
 )    }
 
