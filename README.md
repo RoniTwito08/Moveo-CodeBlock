@@ -1,4 +1,4 @@
-﻿# Moveo-CodeBlock
+﻿# CodeBlock
 🧠 Moveo-CodeBlock
 An online collaborative JavaScript coding platform that allows a mentor and multiple students to work on code blocks in real-time.
 
