@@ -22,7 +22,7 @@ export const connectDB = async () => {
 const app = express();
 app.use(cors(
     {
-        origin:  ['https://moveo-codeblock.netlify.app', 'http://localhost:3000'],
+        origin:  ['https://moveo-codeblock.netlify.app', 'http://localhost:5173'],
         credentials: true,
     }
 ));
