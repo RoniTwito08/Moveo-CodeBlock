@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,useLocation } from "react-router-dom";
 import { fetchCodeBlocks, fetchActiveCodeBlockIds } from "../../services/api"; 
 import styles from "./LobbyPage.module.css";
 
@@ -8,12 +8,15 @@ interface CodeBlock {
   title: string;
   initialCode: string;
   solution: string;
+  explanation: string;
+  difficulty: number;
 }
 
 const LobbyPage = () => {
   const [blocks, setBlocks] = useState<CodeBlock[]>([]);
   const [activeIds, setActiveIds] = useState<string[]>([]);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     const getBlocks = async () => {
@@ -51,14 +54,20 @@ const LobbyPage = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>Choose Code Block</h1>
       <div className={styles.blocks}>
-        {blocks.map((block) => (
-          <button
-            key={block._id}
-            onClick={() => handleClick(block._id)}
-            className={`${styles.blockButton} ${activeIds.length > 0 && !activeIds.includes(block._id) ? styles.hidden : ""}`}
-          >
-            {block.title}
-          </button>
+      {blocks.map((block) => (
+      <button
+        key={block._id}
+        onClick={() => handleClick(block._id)}
+        className={`${styles.blockButton} ${
+        activeIds.length > 0 && !activeIds.includes(block._id) ? styles.hidden : ""
+    }`}
+  >
+      <div className={styles.blockTitle}>{block.title}</div>
+      <div className={styles.difficulty}>
+          {"⭐".repeat(block.difficulty)}
+          {"☆".repeat(5 - block.difficulty)}
+      </div>
+      </button>
         ))}
       </div>
     </div>
