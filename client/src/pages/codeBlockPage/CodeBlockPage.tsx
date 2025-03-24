@@ -119,6 +119,7 @@ const CodeBlockPage = () => {
        
         )}
       <Editor
+        className={styles.editorContainer}
         height="600px"
         width="1000px"
         defaultLanguage="javascript"
