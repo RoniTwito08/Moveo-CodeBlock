@@ -39,6 +39,8 @@ Backend: Node.js + Express + TypeScript + Socket.IO
 
 Database: MongoDB (Mongoose)
 
+Url : https://moveo-codeblock.netlify.app/
+
 🧪 How to Run Locally
 1. Clone the repository
 git clone https://github.com/RoniTwito08/Moveo-CodeBlock.git
