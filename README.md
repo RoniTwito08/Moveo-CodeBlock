@@ -19,6 +19,10 @@ An online collaborative JavaScript coding platform that allows a mentor and mult
 
 🧹 When the mentor leaves – all students are redirected to the lobby
 
+⭐ Each code block has a difficulty level (1–5 stars)
+
+📘 Mentor-only button: Reveal the solution and explanation to all students
+
 🗂️ Pages
 Lobby Page:
 List of at least 4 code blocks. Clicking a block redirects to the editor.
