@@ -5,6 +5,8 @@ export interface ICodeBlock extends Document {
   title: string;
   initialCode: string;
   solution: string;
+  difficulty:number;
+  explanation: string;
   createdAt?: Date;
 }
 
@@ -24,6 +26,17 @@ const codeBlockSchema = new Schema<ICodeBlock>(
        {  type: String, 
         required: true
        },
+       difficulty:
+        { 
+          type: Number, 
+          required: true, 
+          min: 1, 
+          max: 5 
+        },
+        explanation: {
+          type: String,
+          required: true
+        }
   },
   {
     timestamps: 

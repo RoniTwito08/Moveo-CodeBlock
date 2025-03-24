@@ -27,8 +27,11 @@ const emitStudentCount = (roomId: string) => {
   const studentCount = room.participants.size - (room.mentorId ? 1 : 0);
   io.to(roomId).emit("update-student-count", studentCount);
 };
-
-type CodeBlockType = { _id: string; solution: string };
+type CodeBlockType = {
+  _id: string;
+  solution: string;
+  explanation: string; 
+};
 const codeBlocks: CodeBlockType[] = [];
 
 io.on("connection", (socket) => {
@@ -69,6 +72,16 @@ io.on("connection", (socket) => {
       io.to(roomId).emit("show-smiley");
     }
   });
+  
+  socket.on("show-solution", (roomId: string) => {
+    const block = codeBlocks.find((b) => b._id === roomId);
+    if (block) {
+      io.to(roomId).emit("show-full-solution", {
+        code: block.solution,
+        explanation: block.explanation
+      });
+    }
+  });
 
   socket.on("disconnect", () => {
     for (const roomId in rooms) {
@@ -93,6 +106,7 @@ connectDB()
       codeBlocks.push({
         _id: block._id.toString(),
         solution: block.solution,
+        explanation: block.explanation,
       });
     });
 

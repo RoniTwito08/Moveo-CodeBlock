@@ -9,7 +9,10 @@ interface CodeBlock {
   _id: string;
   title: string;
   initialCode: string;
+  explanation: string;
   solution: string;
+  difficulty: number;
+
 }
 
 const CodeBlockPage = () => {
@@ -19,6 +22,7 @@ const CodeBlockPage = () => {
   const [role, setRole] = useState<"mentor" | "student">("student");
   const [showSmiley, setShowSmiley] = useState(false);
   const [studentCount, setStudentCount] = useState(0);
+  const [explanation, setExplanation] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,6 +48,10 @@ const CodeBlockPage = () => {
   
     socket.on("role", (receivedRole: "mentor" | "student") => {
       setRole(receivedRole);
+    });
+    socket.on("show-full-solution", ({ code, explanation }) => {
+      setCode(code);
+      setExplanation(explanation);
     });
   
     socket.on("code-change", (newCode: string) => {
@@ -96,7 +104,20 @@ const CodeBlockPage = () => {
        🎉 Correct! Great job! 😊
      </div>
 )    }
-
+      {explanation && (
+  <div className={styles.explanation}>
+    <h3>💡 Explanation</h3>
+    <p>{explanation}</p>
+  </div>
+)}
+      {role === "mentor" && (
+      <button className={styles.solutionButton} onClick={() => {
+      socket.emit("show-solution", blockId);
+       }}>
+       💡 Show Full Solution
+       </button>
+       
+        )}
       <Editor
         height="600px"
         width="1000px"
