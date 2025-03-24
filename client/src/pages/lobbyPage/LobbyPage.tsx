@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate ,useLocation } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import { fetchCodeBlocks, fetchActiveCodeBlockIds } from "../../services/api"; 
 import styles from "./LobbyPage.module.css";
 
