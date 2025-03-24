@@ -50,3 +50,31 @@
   font-size: 1.2rem;
   color: gold;
 }
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .blocks {
+    flex-direction: column; 
+    gap: 0.8rem;
+  }
+
+  .blockButton {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    width: 100%; 
+  }
+
+  .blockTitle {
+    font-size: 1rem;
+  }
+
+  .difficulty {
+    font-size: 1rem;
+  }
+}
