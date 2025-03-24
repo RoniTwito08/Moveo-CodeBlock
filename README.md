@@ -23,7 +23,8 @@ An online collaborative JavaScript coding platform that allows a mentor and mult
 
 📘 Mentor-only button: Reveal the solution and explanation to all students
 
-🗂️ Pages
+🗂️ Pages :
+
 Lobby Page:
 List of at least 4 code blocks. Clicking a block redirects to the editor.
 
