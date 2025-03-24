@@ -9,7 +9,7 @@ const BASE_URL = process.env.BASE_URL;
 
 const io = new Server(server, {
   cors: {
-    origin: BASE_URL,
+    origin:  ['https://moveo-codeblock.netlify.app', 'http://localhost:3000'],
     methods: ["GET", "POST"],
     credentials: true,
   },
