@@ -7,7 +7,7 @@
     "test": "jest --detectOpenHandles --runInBand --forceExit",
     "dev": "npx ts-node app.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
