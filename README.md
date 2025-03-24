@@ -31,7 +31,7 @@ List of at least 4 code blocks. Clicking a block redirects to the editor.
 Code Block Page:
 Contains title, code editor, role indicator, and real-time updates.
 
-🧱 Tech Stack
+🧱 Tech Stack:
 
 Frontend: React + TypeScript + Socket.IO + Monaco Editor
 
