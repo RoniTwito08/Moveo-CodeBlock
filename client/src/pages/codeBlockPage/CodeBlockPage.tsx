@@ -129,7 +129,7 @@ const CodeBlockPage = () => {
         options={{
           fontSize: 14,
           minimap: { enabled: false },
-          readOnly: role === "mentor",
+          //readOnly: role === "mentor",
         }}
       />
     </div>
