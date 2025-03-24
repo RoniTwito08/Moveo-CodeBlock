@@ -32,6 +32,7 @@ Code Block Page:
 Contains title, code editor, role indicator, and real-time updates.
 
 🧱 Tech Stack
+
 Frontend: React + TypeScript + Socket.IO + Monaco Editor
 
 Backend: Node.js + Express + TypeScript + Socket.IO
