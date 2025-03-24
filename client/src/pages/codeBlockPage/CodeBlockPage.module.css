@@ -2,11 +2,7 @@
     padding: 2rem;
     text-align: center;
   }
-  .editor-container {
-    position: relative;
-    overflow-y: auto;
-  }
-  
+ 
   .title {
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -25,8 +21,7 @@
     text-align: left;
     max-width: 800px;
     margin: 0 auto;
-    position: absolute; 
-    top: 50%;
+    
   }
   .smiley {
     font-size: 5rem;
