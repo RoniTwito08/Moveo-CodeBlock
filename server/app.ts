@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
     const mentorStillConnected =
       room.mentorId && room.participants.has(room.mentorId);
 
-    if (!room.mentorId || !mentorStillConnected) {
+    if (!mentorStillConnected) {
       room.mentorId = socket.id;
       socket.emit("role", "mentor");
       console.log(`🎓 Mentor assigned to room ${roomId}`);
@@ -66,10 +66,21 @@ io.on("connection", (socket) => {
 
   socket.on("code-change", ({ roomId, code }) => {
     socket.to(roomId).emit("code-change", code);
-
+  
     const currentBlock = codeBlocks.find((b) => b._id === roomId);
-    if (currentBlock && code.trim() === currentBlock.solution.trim()) {
+  
+    const normalize = (str: string) => str.replace(/\s/g, "").trim();
+  
+    if (currentBlock && normalize(code) === normalize(currentBlock.solution)) {
+  
+      io.to(roomId).emit("show-full-solution", {
+        code: currentBlock.solution,
+        explanation: currentBlock.explanation,
+      });
+      const room = rooms[roomId];
+    if (room && socket.id !== room.mentorId) {
       io.to(roomId).emit("show-smiley");
+    }
     }
   });
   
