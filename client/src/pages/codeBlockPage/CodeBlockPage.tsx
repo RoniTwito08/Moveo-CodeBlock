@@ -123,8 +123,8 @@ const CodeBlockPage = () => {
         height="600px"
         width="1000px"
         defaultLanguage="javascript"
-        value={code}
-        onChange={handleCodeChange}
+        value={role === "mentor" ? undefined : code}
+        onChange={role === "mentor" ? undefined : handleCodeChange}
         theme="vs-dark"
         options={{
           fontSize: 14,
