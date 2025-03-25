@@ -81,7 +81,14 @@ export const setupSocket = (
         });
       }
     });
-
+    socket.on("mentor-disconnect", (roomId: string) => {
+      const room = rooms[roomId];
+        if (room && socket.id === room.mentorId) {
+          io.to(roomId).emit("room-closed");
+          delete rooms[roomId];
+          console.log(`👋 Mentor clicked disconnect — closed room ${roomId}`);
+  }
+});
     socket.on("disconnect", () => {
       for (const roomId in rooms) {
         const room = rooms[roomId];
