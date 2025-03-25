@@ -21,7 +21,11 @@ An online collaborative JavaScript coding platform that allows a mentor and mult
 
 ⭐ Each code block has a difficulty level (1–5 stars)
 
-📘 Mentor-only button: Reveal the solution and explanation to all students
+📘 Mentor-only button:
+ Show Full Solution : Reveal the solution and explanation to all students
+ Disconnect : Dedicated button which close the room and returns everyone to the lobby.
+
+
 
 🗂️ Pages :
 
