@@ -80,6 +80,9 @@
     font-size: 1.1rem;
     line-height: 1.5;
   }
+.readOnlyEditor .monaco-editor .cursor {
+  display: none !important;
+}
   @media (max-width: 768px) {
     .container {
       padding: 1rem;
