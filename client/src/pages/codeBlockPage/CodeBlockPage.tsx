@@ -55,7 +55,7 @@ const CodeBlockPage = () => {
     });
   
     socket.on("code-change", (newCode: string) => {
-      setCode(newCode);
+    setCode((prev) => prev === newCode ? prev : newCode);
     });
   
     socket.on("show-smiley", () => {
@@ -129,7 +129,7 @@ const CodeBlockPage = () => {
         options={{
           fontSize: 14,
           minimap: { enabled: false },
-          readOnly: role === "mentor",
+          readOnly: role === "mentor" ? "nocursor" : false,
         }}
       />
     </div>
