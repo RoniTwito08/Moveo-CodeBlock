@@ -29,6 +29,7 @@ export const setupSocket = (
     console.log("⚡ New client connected:", socket.id);
 
     socket.on("join-room", (roomId: string) => {
+      //create new room with default values
       if (!rooms[roomId]) {
         rooms[roomId] = {
           mentorId: null,
@@ -57,7 +58,7 @@ export const setupSocket = (
       socket.to(roomId).emit("code-change", code);
 
       const currentBlock = codeBlocks.find((b) => b._id === roomId);
-      const normalize = (str: string) => str.replace(/\s/g, "").trim();
+      const normalize = (str: string) => str.replace(/\s/g, "").trim(); //ignore spaces for the solution
 
       if (currentBlock && normalize(code) === normalize(currentBlock.solution)) {
         io.to(roomId).emit("show-full-solution", {
@@ -81,6 +82,7 @@ export const setupSocket = (
         });
       }
     });
+    //function if the mentor want to go back to loby
     socket.on("mentor-disconnect", (roomId: string) => {
       const room = rooms[roomId];
         if (room && socket.id === room.mentorId) {
@@ -89,6 +91,7 @@ export const setupSocket = (
           console.log(`👋 Mentor clicked disconnect — closed room ${roomId}`);
   }
 });
+    //function if the mentor want to leave the app
     socket.on("disconnect", () => {
       for (const roomId in rooms) {
         const room = rooms[roomId];
