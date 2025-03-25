@@ -27,6 +27,7 @@ const LobbyPage = () => {
       }
     };
     getBlocks();
+    //if there is a mentor , show only hes codeblock
     const getActive = async () => {
       try {
         const ids = await fetchActiveCodeBlockIds();
