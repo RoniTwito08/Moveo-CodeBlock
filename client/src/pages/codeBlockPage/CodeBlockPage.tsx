@@ -120,12 +120,12 @@ const CodeBlockPage = () => {
        
         )}
       <Editor
-        className={styles.editorContainer}
+        className={`${styles.editorContainer} ${role === "mentor" ? styles.readOnlyEditor : ""}`}
         height="600px"
         width="1000px"
         defaultLanguage="javascript"
         value={code}
-        onChange={handleCodeChange}
+        onChange={role === "mentor" ? undefined : handleCodeChange}
         theme="vs-dark"
         options={{
           fontSize: 14,
