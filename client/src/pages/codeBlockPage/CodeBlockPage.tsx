@@ -4,6 +4,7 @@ import { fetchCodeBlockById } from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./CodeBlockPage.module.css";
 import Editor from "@monaco-editor/react";
+import useCodeBlockSocket from "../../hooks/useCodeBlockSocket";
 
 interface CodeBlock {
   _id: string;
@@ -40,46 +41,17 @@ const CodeBlockPage = () => {
 
     fetchBlock();
   }, [blockId]);
+  
+  if (!blockId) return <div>Loading...</div>;
 
-  useEffect(() => {
-    if (!blockId) return;
-  
-    socket.emit("join-room", blockId);
-  
-    socket.on("role", (receivedRole: "mentor" | "student") => {
-      setRole(receivedRole);
-    });
-    socket.on("show-full-solution", ({ code, explanation }) => {
-      setCode(code);
-      setExplanation(explanation);
-    });
-  
-    socket.on("code-change", (newCode: string) => {
-     setCode(newCode);
-
-    });
-  
-    socket.on("show-smiley", () => {
-      setShowSmiley(true);
-    });
-    socket.on("update-student-count", (count: number) => {
-      setStudentCount(count);
-    });
-
-    socket.on("room-closed", () => {
-      alert("🚪 The mentor left the room. You'll be redirected to the lobby.");
-      navigate("/");
-    });
-  
-    return () => {
-      socket.emit("leave-room", blockId);
-      socket.off("role");
-      socket.off("code-change");
-      socket.off("show-smiley");
-      socket.off("room-closed");
-      socket.off("update-student-count");
-    };
-  }, [blockId]);
+  useCodeBlockSocket({
+    blockId,
+    setRole,
+    setCode,
+    setExplanation,
+    setShowSmiley,
+    setStudentCount,
+  });
   
  
   const handleCodeChange = (value: string | undefined) => {
