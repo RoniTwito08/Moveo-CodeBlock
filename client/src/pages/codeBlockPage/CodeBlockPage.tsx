@@ -55,7 +55,8 @@ const CodeBlockPage = () => {
     });
   
     socket.on("code-change", (newCode: string) => {
-    setCode((prev) => prev === newCode ? prev : newCode);
+     setCode(newCode);
+
     });
   
     socket.on("show-smiley", () => {
