@@ -91,6 +91,15 @@ const CodeBlockPage = () => {
        </button>
        
         )}
+      {role === "mentor" && (
+      <button className={styles.leaveButton} onClick={() => {
+      socket.emit("mentor-disconnect", blockId);
+       navigate("/");
+      }}
+       >
+        🚪 Disconnect
+       </button>
+      )}
       <Editor
         className={`${styles.editorContainer} ${role === "mentor" ? styles.readOnlyEditor : ""}`}
         height="600px"
