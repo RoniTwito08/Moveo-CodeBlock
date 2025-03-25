@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchCodeBlockById } from "../../services/api";
 import socket from "../../services/socket";
 import styles from "./CodeBlockPage.module.css";
@@ -24,7 +24,7 @@ const CodeBlockPage = () => {
   const [showSmiley, setShowSmiley] = useState(false);
   const [studentCount, setStudentCount] = useState(0);
   const [explanation, setExplanation] = useState("");
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     if (!blockId) return;
